@@ -1,6 +1,6 @@
 # NoEggUseless
 Java Exercise Project
-/**
+
  *  运用了java网络编程的知识结合了一个同学的代码做了一个简易（简陋）聊天室。
  *    准备当作Java课程设计使用，目前正在学习java基础
  *
@@ -18,4 +18,4 @@ Java Exercise Project
  *    4.希望可以用后来学习到的框架重写这个玩意儿
  *
  *    暂时就想到了这些0.0
- */
+ 
