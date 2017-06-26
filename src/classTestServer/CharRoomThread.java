@@ -16,7 +16,7 @@ public class CharRoomThread extends Thread {
 	public CharRoomThread(user ss,Socket socket) throws IOException {
 		super();
 		this.socket = socket;
-		this.ois = new ObjectInputStream(this.socket.getInputStream());
+		//this.ois = new ObjectInputStream(this.socket.getInputStream());
 		this.oos = new ObjectOutputStream(this.socket.getOutputStream());
 		this.ss = ss;
 		this.start();
@@ -29,15 +29,13 @@ public class CharRoomThread extends Thread {
 			oos.writeObject(ss);
 			oos.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			try {
 				oos.close();
-				ois.close();
+				//ois.close();
 				socket.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
