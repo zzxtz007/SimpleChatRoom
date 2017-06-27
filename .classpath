@@ -5,5 +5,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/junit"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mysql"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hibernate-core"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/junit4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mariadb"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

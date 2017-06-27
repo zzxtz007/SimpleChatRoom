@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import userInfomion.users;
 
 public class userSqlUtil 
 {	
@@ -42,43 +41,8 @@ public class userSqlUtil
 	}
 	
 
-	@Test
-	public void userCreate()
-	{
-		users user = new users(1, "张三","男", new Date(), "北京");  
-		session.save(user);
-	}
-	
-	@Test
-	public void testgetuser()
-	{
-		users user = (users) session.get(users.class, 1);
-		System.out.println(user);
-	}
-	
-	@Test
-	public void testloaduser()
-	{
-		users user = (users) session.load(users.class, 1);
-		System.out.println(user);
-	}
-	
-	@Test
-	public void testupdateuser()
-	{
-		users user = (users) session.get(users.class, 1);
-		user.setGender("女");
-		session.update(user);
-		System.out.println(user);
 
-	}
-	
-	@Test
-	public void testDeleteuser()
-	{
-		users user = (users) session.get(users.class, 1);
-		session.delete(user);
-	}
+
 		
 	
 	@After
