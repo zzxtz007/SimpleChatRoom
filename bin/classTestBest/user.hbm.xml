@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2017-6-27 10:18:31 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2017-6-28 8:58:09 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="classTestBest.user" table="USER">
         <id name="name" type="java.lang.String">
@@ -10,9 +10,6 @@
         </id>
         <property name="password" type="java.lang.String">
             <column name="PASSWORD" />
-        </property>
-        <property name="say" type="java.lang.String">
-            <column name="SAY" />
         </property>
         <property name="flag" type="int">
             <column name="FLAG" />

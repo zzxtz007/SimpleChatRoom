@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class user implements Serializable {
 	private String name;
 	private String password;
-	private String say;
+	//private String say;
 	private int flag = 0;
 
-	public user(String name, String password, String say) {
+	public user(String name, String password ) {
 		super();
 		this.name = name;
 		this.password = password;
-		this.say = say;
+		//this.say = say;
 	}
 	
 	public int getFlag() {
@@ -26,7 +26,7 @@ public class user implements Serializable {
 	public user(){
 		this.name = "test";
 		this.password = "test";
-		this.say = "test";
+		
 	}
 
 	public String getName() {
@@ -45,17 +45,18 @@ public class user implements Serializable {
 		this.password = password;
 	}
 
-	public String getSay() {
+	/*public String getSay() {
 		return say;
 	}
 
 	public void setSay(String say) {
 		this.say = say;
-	}
+	}*/
 
 	@Override
 	public String toString() {
-		return "user [name=" + name + ", password=" + password + ", say=" + say + "]";
+//		return "user [name=" + name + ", password=" + password + ", say=" + say + "]";
+		return "user [name=" + name + ", password=" + password + "]";
 	}
 	
 }

@@ -14,6 +14,7 @@ public class classTestClient {
 	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
 		Socket socket = new Socket("127.0.0.1", 8800);
 		user wang = new user();
+		wang.setPassword("11111");
 		wang.setFlag(2);
 		OutputStream os = socket.getOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(os);
@@ -23,7 +24,7 @@ public class classTestClient {
 		
 		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 		user ss = (user) ois.readObject();
-		System.out.println(ss.getSay());
+		System.out.println(ss.getFlag());
 		ois.close();
 		oos.close();
 		os.close();

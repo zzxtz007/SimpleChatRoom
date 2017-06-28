@@ -2,6 +2,7 @@ package classTestServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,7 +18,7 @@ public class classTestSever {
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		ServerSocket serverSocket = new ServerSocket(8800);
 		System.out.println("等待客户端发送");
-		
+		boolean isChatRoomOpen = false;
 		while(true){
 			Socket socket = serverSocket.accept();
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
@@ -27,10 +28,21 @@ public class classTestSever {
 				System.out.println("asaa");
 				switch(us.getFlag())
 				{
-				case 0:new LoginThread(us, socket);System.out.println("1");break;//进入登陆线程
-				case 1:new RegisterThread(us, socket);System.out.println("2");break;//进入注册线程
-				case 2:new CharRoomThread(us, socket);System.out.println(3);break;//进入聊天室线程
-				case 3:new FileUpThread();System.out.println(4);break;//进入文件存储线程
+				case 0:new LoginThread(us, socket);System.out.println("进入登陆线程");break;//进入登陆线程
+				case 1:new RegisterThread(us, socket);System.out.println("进入注册线程");break;//进入注册线程
+				
+				case 2:
+					if(isChatRoomOpen)
+						break;
+					else
+					{
+						
+						new ChatRoomThread(isChatRoomOpen=true);
+						System.out.println("创建聊天室线程");
+						break;//进入聊天室线程
+					}
+				
+				case 3:new FileUpThread();System.out.println("进入文件存储线程");break;//进入文件存储线程
 				}
 			}
 		}

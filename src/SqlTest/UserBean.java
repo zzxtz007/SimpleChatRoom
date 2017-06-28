@@ -56,4 +56,13 @@ public class UserBean extends HibernateBase {
         Iterator it = query.iterate();  
         return it;  
     }  
+    
+    /** 
+     * 精确查询系统中所有的Course，返回的是包含有Course持久的对象。 
+     */  
+    public user getUser(String name) throws HibernateException {  
+        beginTransaction();  
+        user it = (user) session.get(user.class, name);
+        return it;  
+    }  
 }  

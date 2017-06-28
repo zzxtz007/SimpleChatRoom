@@ -7,12 +7,17 @@ import java.awt.TextArea;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import classTestBest.userChat;
+
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -27,11 +32,13 @@ public class TcpClient extends JFrame
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
 	private JTextArea textArea;
-	DataInputStream dis;
-	DataOutputStream dos;
+	ObjectOutputStream oos;
+	ObjectInputStream ois;
+	userChat uc;
+	userChat oc;
 
 	/**
-	 * Launch the application.
+	 * 启动程序.
 	 */
 	public static void main(String[] args)
 	{
@@ -52,22 +59,25 @@ public class TcpClient extends JFrame
 	}
 
 	/**
-	 * Create the frame.
+	 * 创建界面.
 	 */
 	public TcpClient()
 	{
+		uc = new userChat("aaa","asdasdas");
 		socketSet();
 		View();
-		new ThreadMessageListener(dis, textArea).start();
+		System.out.println(333);
+		new ThreadMessageListener(ois, textArea).start();
 	}
 
 	private void socketSet()
 	{
 		try
 		{
-			socket = new Socket("127.0.0.1", 8800);
-			dis = new DataInputStream(socket.getInputStream());
-			dos = new DataOutputStream(socket.getOutputStream());
+			socket = new Socket("127.0.0.1", 8801);
+			ois = new ObjectInputStream(socket.getInputStream());
+			oos = new ObjectOutputStream(socket.getOutputStream());
+			
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -82,7 +92,8 @@ public class TcpClient extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		setTitle(uc.getChatname());
+		
 		btnNewButton = new JButton("发送");
 
 		btnNewButton.setBounds(20, 231, 93, 23);
@@ -116,7 +127,8 @@ public class TcpClient extends JFrame
 			{
 				try
 				{
-					dos.writeUTF(textField.getText().toString());
+					uc.setSay(textField.getText().toString());
+					oos.writeObject(uc);
 				} catch (IOException e1)
 				{
 					e1.printStackTrace();
@@ -136,12 +148,12 @@ public class TcpClient extends JFrame
 
 	class ThreadMessageListener extends Thread
 	{
-		private DataInputStream dis;
+		private ObjectInputStream ois;
 		private JTextArea area;
-
-		public ThreadMessageListener(DataInputStream dis, JTextArea area)
+		
+		public ThreadMessageListener(ObjectInputStream ois, JTextArea area)
 		{
-			this.dis = dis;
+			this.ois = ois;
 			this.area = area;
 		}
 
@@ -151,7 +163,9 @@ public class TcpClient extends JFrame
 			{
 				try
 				{
-					String s = dis.readUTF();
+					System.out.println(444);
+					oc= (userChat) ois.readObject();
+					String s = oc.toString();
 					area.append(s+"\n");
 
 				} catch (Exception e)
