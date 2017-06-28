@@ -129,6 +129,7 @@ public class TcpClient extends JFrame
 				{
 					uc.setSay(textField.getText().toString());
 					oos.writeObject(uc);
+					oos.flush();
 				} catch (IOException e1)
 				{
 					e1.printStackTrace();

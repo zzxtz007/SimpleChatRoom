@@ -71,10 +71,12 @@ public class ChatRoomThread extends Thread {
 						{
 							uc.setFlag(50);
 							chatroom.get(i).oos.writeObject(uc);
+							oos.flush();
 						}
 						else
 							uc.setFlag(45);
 							chatroom.get(i).oos.writeObject(uc);
+							oos.flush();
 					}
 					//flag = 50 别人发送的
 					//flag = 45 自己发送的

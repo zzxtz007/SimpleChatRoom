@@ -1,8 +1,9 @@
 package classTestBest;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class userChat {
+public class userChat implements Serializable{
 	private String chatname;
 	private int flag;
 	private String say;
