@@ -1,5 +1,6 @@
 package classTestServer;
 
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,39 +12,46 @@ import java.util.ArrayList;
 
 import classTestBest.userChat;
 
-public class ChatRoomThread extends Thread {
+public class ChatRoomThread extends Thread
+{
 	boolean isChatRoomOpen;
 	ArrayList<chatThread> chatroom = new ArrayList<chatThread>();
-	//Map<userChat, chatThread> chatroom = new HashMap<userChat, chatThread>();
+	// Map<userChat, chatThread> chatroom = new HashMap<userChat, chatThread>();
 	int InNum = 0;
-	public ChatRoomThread(boolean isChatRoomOpen) throws IOException {
+
+	public ChatRoomThread(boolean isChatRoomOpen) throws IOException
+	{
 		this.isChatRoomOpen = isChatRoomOpen;
 		this.start();
 	}
 
-	public void run() {
+	public void run()
+	{
 		ServerSocket serverSocket;
-		try {
+		try
+		{
 			serverSocket = new ServerSocket(8801);
-			while(isChatRoomOpen){
+			while (isChatRoomOpen)
+			{
 				Socket socket = serverSocket.accept();
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-				chatThread x = new chatThread(socket,oos, ois, InNum);
-				//chatroom.put(arg0, arg1)
+				ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+				chatThread x = new chatThread(socket, oos, ois, InNum);
+				// chatroom.put(arg0, arg1)
 				System.out.println(111111);
 				chatroom.add(x); // 将线程加入ArrayList中
 				x.start();
 				InNum++;
 			}
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
-	class chatThread extends Thread{
+	class chatThread extends Thread
+	{
 		private int num;
 		private Socket socket;
 		private ObjectOutputStream oos;
@@ -59,27 +67,33 @@ public class ChatRoomThread extends Thread {
 
 		public void run()
 		{// 同步消息至所有客户端
-			while (true)
+			while (isChatRoomOpen)
 			{
 				try
 				{
 					System.out.println(222222222);
-					userChat uc = (userChat)ois.readObject(); 
-					for(int i=0;i<InNum;i++)
+					//userChat uc = (userChat) ois.readObject();
+					String s = ois.readUTF();
+					userChat uc = new userChat("text", s);
+					for (int i = 0; i < InNum; i++)
 					{
-						if(i!=num)
+						if (i != num)
 						{
 							uc.setFlag(50);
 							chatroom.get(i).oos.writeObject(uc);
+							System.out.println("发送给别人"+"num::"+num+" InNum::"+InNum);
 							oos.flush();
-						}
-						else
+						} else
+						{
 							uc.setFlag(45);
 							chatroom.get(i).oos.writeObject(uc);
 							oos.flush();
+							System.out.println("发送给自己"+"num::"+num+" InNum::"+InNum);
+						}
+						System.out.println("什么鬼？");
 					}
-					//flag = 50 别人发送的
-					//flag = 45 自己发送的
+					// flag = 50 别人发送的
+					// flag = 45 自己发送的
 				} catch (IOException e)
 				{
 					e.printStackTrace();
@@ -91,14 +105,13 @@ public class ChatRoomThread extends Thread {
 					} catch (IOException e1)
 					{
 						e1.printStackTrace();
-					}finally {
-						if(InNum==0)
+					} finally
+					{
+						if (InNum == 0)
 							isChatRoomOpen = false;
+						System.out.println(isChatRoomOpen);
 						break;
 					}
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 		}

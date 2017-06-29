@@ -13,6 +13,7 @@ import classTestBest.userChat;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -36,6 +37,8 @@ public class TcpClient extends JFrame
 	ObjectInputStream ois;
 	userChat uc;
 	userChat oc;
+	int i =0;
+	String[] ss = {"11","22","33","44","55"};
 
 	/**
 	 * 启动程序.
@@ -75,7 +78,7 @@ public class TcpClient extends JFrame
 		try
 		{
 			socket = new Socket("127.0.0.1", 8801);
-			ois = new ObjectInputStream(socket.getInputStream());
+			ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			
 		} catch (IOException e)
@@ -127,9 +130,13 @@ public class TcpClient extends JFrame
 			{
 				try
 				{
-					uc.setSay(textField.getText().toString());
-					oos.writeObject(uc);
+					i++;
+					i=i%5;
+					uc.setSay(ss[i]);
+					//oos.writeObject(uc);
+					oos.writeUTF(textField.getText());
 					oos.flush();
+					System.out.println("action::"+uc);
 				} catch (IOException e1)
 				{
 					e1.printStackTrace();
@@ -166,12 +173,14 @@ public class TcpClient extends JFrame
 				{
 					System.out.println(444);
 					oc= (userChat) ois.readObject();
+					System.out.println(oc.getFlag());
 					String s = oc.toString();
 					area.append(s+"\n");
 
 				} catch (Exception e)
 				{
 					e.printStackTrace();
+					break;
 				}
 			}
 		}

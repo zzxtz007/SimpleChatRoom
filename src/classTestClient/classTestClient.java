@@ -22,10 +22,10 @@ public class classTestClient {
 		oos.flush();
 		System.out.println("已发送");
 		
-		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-		user ss = (user) ois.readObject();
-		System.out.println(ss.getFlag());
-		ois.close();
+//		ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+//		user ss = (user) ois.readObject();
+//		System.out.println(ss.getFlag());
+//		ois.close();
 		oos.close();
 		os.close();
 		socket.close();

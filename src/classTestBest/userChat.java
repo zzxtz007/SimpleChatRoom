@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class userChat implements Serializable{
 	private String chatname;
-	private int flag;
+	private int flag=-1;
 	private String say;
 	private Date date;
 	

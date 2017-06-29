@@ -8,7 +8,8 @@ import java.net.Socket;
 
 import classTestBest.user;
 
-public class classTestSever {
+public class classTestSever
+{
 
 	/**
 	 * 将socket封装到user类中，user有4个属性 name password say flag
@@ -33,7 +34,10 @@ public class classTestSever {
 				
 				case 2:
 					if(isChatRoomOpen)
-						break;
+					{
+						socket.close();
+						continue;
+					}
 					else
 					{
 						
