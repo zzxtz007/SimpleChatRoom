@@ -19,7 +19,7 @@ public class classTestSever
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		ServerSocket serverSocket = new ServerSocket(8800);
 		System.out.println("等待客户端发送");
-		boolean isChatRoomOpen = false;
+		boolean[] isChatRoomOpen = {false,false};
 		while(true){
 			Socket socket = serverSocket.accept();
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
@@ -33,15 +33,16 @@ public class classTestSever
 				case 1:new RegisterThread(us, socket);System.out.println("进入注册线程");break;//进入注册线程
 				
 				case 2:
-					if(isChatRoomOpen)
+					if(isChatRoomOpen[1])
 					{
 						socket.close();
+						System.out.println("已存在聊天室无需创建");
 						continue;
 					}
 					else
 					{
-						
-						new ChatRoomThread(isChatRoomOpen=true);
+						isChatRoomOpen[1]=true ;
+						new ChatRoomThread(isChatRoomOpen);
 						System.out.println("创建聊天室线程");
 						break;//进入聊天室线程
 					}

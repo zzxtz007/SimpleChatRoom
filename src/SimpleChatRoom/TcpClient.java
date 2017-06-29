@@ -132,11 +132,11 @@ public class TcpClient extends JFrame
 				{
 					i++;
 					i=i%5;
-					uc.setSay(ss[i]);
-					//oos.writeObject(uc);
+//					uc.setSay(ss[i]);
+//					oos.writeObject(uc);
 					oos.writeUTF(textField.getText());
 					oos.flush();
-					System.out.println("action::"+uc);
+					//System.out.println("action::"+uc);
 				} catch (IOException e1)
 				{
 					e1.printStackTrace();
@@ -171,7 +171,7 @@ public class TcpClient extends JFrame
 			{
 				try
 				{
-					System.out.println(444);
+					System.out.println("开启消息监听进程");
 					oc= (userChat) ois.readObject();
 					System.out.println(oc.getFlag());
 					String s = oc.toString();
