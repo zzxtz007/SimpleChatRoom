@@ -12,7 +12,7 @@ import classTestBest.user;
 public class classTestClient {
 
 	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
-		Socket socket = new Socket("127.0.0.1", 8800);
+		Socket socket = new Socket("192.168.199.119", 8800);
 		user wang = new user();
 		wang.setPassword("11111");
 		wang.setFlag(2);

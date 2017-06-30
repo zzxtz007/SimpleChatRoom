@@ -179,6 +179,7 @@ public class TcpClient extends JFrame
 
 				} catch (Exception e)
 				{
+					area.append("无法连接终端\n");
 					e.printStackTrace();
 					break;
 				}

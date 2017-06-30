@@ -44,7 +44,7 @@ public class classTestSever
 						isChatRoomOpen[1]=true ;
 						new ChatRoomThread(isChatRoomOpen);
 						System.out.println("创建聊天室线程");
-						break;//进入聊天室线程
+						continue;//进入聊天室线程
 					}
 				
 				case 3:new FileUpThread();System.out.println("进入文件存储线程");break;//进入文件存储线程

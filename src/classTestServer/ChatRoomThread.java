@@ -14,10 +14,11 @@ import classTestBest.userChat;
 
 public class ChatRoomThread extends Thread
 {
-	boolean[] isChatRoomOpen;
+	volatile boolean[] isChatRoomOpen;
 	ArrayList<chatThread> chatroom = new ArrayList<chatThread>();
 	// Map<userChat, chatThread> chatroom = new HashMap<userChat, chatThread>();
 	int InNum = 0;
+	ServerSocket serverSocket = null;
 
 	public ChatRoomThread(boolean[] isChatRoomOpen) throws IOException
 	{
@@ -27,7 +28,6 @@ public class ChatRoomThread extends Thread
 
 	public void run()
 	{
-		ServerSocket serverSocket = null;
 		try
 		{
 			serverSocket = new ServerSocket(8801);
@@ -50,6 +50,7 @@ public class ChatRoomThread extends Thread
 		} catch (IOException e)
 		{
 			System.out.println("聊天室线程即将关闭");
+			System.out.println(serverSocket!=null);
 			if(serverSocket!=null){
 				try
 				{
@@ -126,7 +127,21 @@ public class ChatRoomThread extends Thread
 					} finally
 					{
 						if (InNum == 0)
+						{
+							
 							isChatRoomOpen[1] = false;
+							if(serverSocket!=null){
+								try
+								{
+									System.out.println("关闭serverSocket");
+									serverSocket.close();
+								} catch (IOException e1)
+								{
+									System.out.println("关闭serverSocket错误");
+									e1.printStackTrace();
+								}
+							}
+						}
 						//System.out.println(isChatRoomOpen[1]);
 						break;
 					}
