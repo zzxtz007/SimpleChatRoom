@@ -1,0 +1,7 @@
+A chatroom which is written in JAVA.
+
+We have two version of the server. The EfficientServer is very fast but it also needs more CPU resources. The TcpServer.java is more better for some cheap servers.
+
+The TcpServer still has some problems, I wrote it just for practicing my coding algorithm skills.
+
+My plan is to add an database and create a javaweb for the client.
