@@ -48,7 +48,7 @@ public class TcpClient extends JFrame
 					e.printStackTrace();
 				}
 			}
-		});
+		};
 	}
 
 	/**
