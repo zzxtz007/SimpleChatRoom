@@ -1,4 +1,4 @@
-package SimpleChatRoom;
+package chatroom;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -19,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 
-public class TcpClient extends JFrame
+public class OldTcpClient extends JFrame
 {
 	private Socket socket;
 	private JPanel contentPane;
@@ -33,18 +33,13 @@ public class TcpClient extends JFrame
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
-					TcpClient frame = new TcpClient();
+	public static void main(String[] args){
+		EventQueue.invokeLater(new Runnable(){
+			public void run(){
+				try{
+					OldTcpClient frame = new OldTcpClient();
 					frame.setVisible(true);
-				} catch (Exception e)
-				{
+				} catch (Exception e){
 					e.printStackTrace();
 				}
 			}
@@ -54,28 +49,23 @@ public class TcpClient extends JFrame
 	/**
 	 * Create the frame.
 	 */
-	public TcpClient()
-	{
+	public OldTcpClient(){
 		socketSet();
 		View();
 		new ThreadMessageListener(dis, textArea).start();
 	}
 
-	private void socketSet()
-	{
-		try
-		{
+	private void socketSet(){
+		try{
 			socket = new Socket("127.0.0.1", 8800);
 			dis = new DataInputStream(socket.getInputStream());
 			dos = new DataOutputStream(socket.getOutputStream());
-		} catch (IOException e)
-		{
+		} catch (IOException e){
 			e.printStackTrace();
 		}
 	}
 
-	private void View()
-	{
+	private void View(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -83,12 +73,12 @@ public class TcpClient extends JFrame
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		btnNewButton = new JButton("发送");
+		btnNewButton = new JButton("Send");
 
 		btnNewButton.setBounds(20, 231, 93, 23);
 		contentPane.add(btnNewButton);
 
-		btnNewButton_1 = new JButton("关闭");
+		btnNewButton_1 = new JButton("Close");
 
 		btnNewButton_1.setBounds(292, 231, 93, 23);
 		contentPane.add(btnNewButton_1);
@@ -107,24 +97,19 @@ public class TcpClient extends JFrame
 		Listener();
 	}
 
-	private void Listener()
-	{
-		// 发送按钮的监听
-		btnNewButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				try
-				{
+	private void Listener(){
+		// Listen to send BOTTOM
+		btnNewButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				try{
 					dos.writeUTF(textField.getText().toString());
-				} catch (IOException e1)
-				{
+				} catch (IOException e1){
 					e1.printStackTrace();
 				}
 			}
 		});
 
-		// 关闭按钮的监听
+		// lISTEN TO CLOSED BOTTOM
 		btnNewButton_1.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -134,28 +119,22 @@ public class TcpClient extends JFrame
 		});
 	}
 
-	class ThreadMessageListener extends Thread
-	{
+	class ThreadMessageListener extends Thread{
 		private DataInputStream dis;
 		private JTextArea area;
 
-		public ThreadMessageListener(DataInputStream dis, JTextArea area)
-		{
+		public ThreadMessageListener(DataInputStream dis, JTextArea area){
 			this.dis = dis;
 			this.area = area;
 		}
 
-		public void run()
-		{
-			while (true)
-			{
-				try
-				{
+		public void run(){
+			while (true){
+				try{
 					String s = dis.readUTF();
 					area.append(s+"\n");
 
-				} catch (Exception e)
-				{
+				} catch (Exception e){
 					e.printStackTrace();
 				}
 			}
