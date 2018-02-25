@@ -114,7 +114,7 @@ public class TcpServer{
 							allclient.get(i).dos.writeUTF((space.toString()) + remessage+"num="+clientnum); */
 
 							//String finalmessage = "";
-							allclient.get(num).dos.writeUTF(newmessage+"    -your num="+ num);
+							allclient.get(num).dos.writeUTF(newmessage+"    -your num="+ num); // here is the prolem because when num is larger than total client!!!!!!!!
 					//	}
 					//}
 				} catch (IOException e){
